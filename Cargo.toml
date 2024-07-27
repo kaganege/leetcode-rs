@@ -2,11 +2,3 @@
 name = "leetcode"
 version = "0.1.0"
 edition = "2021"
-
-[[bin]]
-name = "two-sum"
-path = "src/bin/1.two-sum.rs"
-
-[[bin]]
-name = "add-two-numbers"
-path = "src/bin/2.add-two-numbers.rs"
