@@ -4,9 +4,11 @@
  * [1] Two Sum
  */
 
-// @lc code=start
-use std::ops::ControlFlow;
+#![no_main]
 
+struct Solution;
+
+// @lc code=start
 impl Solution {
   pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
     let mut out = Vec::new();
