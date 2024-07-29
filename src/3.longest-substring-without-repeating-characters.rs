@@ -4,8 +4,6 @@
  * [3] Longest Substring Without Repeating Characters
  */
 
-#![cfg_attr(not(test), allow(unused))]
-
 use super::Solution;
 
 // @lc code=start

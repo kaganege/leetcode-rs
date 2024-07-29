@@ -4,8 +4,6 @@
  * [1] Two Sum
  */
 
-#![cfg_attr(not(test), allow(unused))]
-
 use super::Solution;
 
 // @lc code=start

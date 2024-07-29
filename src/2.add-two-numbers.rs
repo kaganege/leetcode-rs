@@ -4,8 +4,6 @@
  * [2] Add Two Numbers
  */
 
-#![cfg_attr(not(test), allow(unused))]
-
 use super::Solution;
 
 // Definition for singly-linked list.
