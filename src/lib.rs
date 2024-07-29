@@ -2,7 +2,7 @@
 
 extern crate test;
 
-pub(crate) struct Solution;
+pub struct Solution;
 
 #[path = "2.add-two-numbers.rs"]
 mod add_two_numbers;
