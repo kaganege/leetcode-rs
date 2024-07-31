@@ -7,6 +7,7 @@
 use super::Solution;
 
 // @lc code=start
+#[allow(unused)]
 impl Solution {
   fn median(nums: Vec<i32>) -> f64 {
     let len = nums.len();
@@ -58,7 +59,57 @@ impl Solution {
     }
   }
 
-  #[allow(dead_code)]
+  fn merge_sort_and_find_median(l1: Vec<i32>, l2: Vec<i32>) -> f64 {
+    let mut p1 = 0;
+    let mut p2 = 0;
+
+    let total = l1.len() + l2.len();
+    let is_even = total % 2 == 0;
+    let center = total / 2;
+
+    let mut previous = 0;
+
+    macro_rules! check_index {
+      ($val:expr) => {
+        if p1 + p2 == center + 1 {
+          break if is_even {
+            (previous + $val) as f64 / 2.0
+          } else {
+            $val as f64
+          };
+        } else {
+          previous = $val;
+        }
+      };
+    }
+
+    loop {
+      match (l1.get(p1), l2.get(p2)) {
+        (Some(&val1), Some(&val2)) => {
+          if val1 < val2 {
+            p1 += 1;
+            check_index!(val1);
+          } else {
+            p2 += 1;
+            check_index!(val2);
+          }
+        }
+
+        (Some(&val1), None) => {
+          p1 += 1;
+          check_index!(val1);
+        }
+
+        (None, Some(&val2)) => {
+          p2 += 1;
+          check_index!(val2);
+        }
+
+        (None, None) => unreachable!(),
+      };
+    }
+  }
+
   fn binary_search() {
     todo!();
   }
@@ -67,7 +118,7 @@ impl Solution {
     match nums1.len() + nums2.len() {
       1 => *nums1.first().unwrap_or_else(|| &nums2[0]) as _,
       2 => Self::median([nums1, nums2].concat()),
-      _ => Self::median(Self::merge_sort(nums1, nums2)),
+      _ => Self::merge_sort_and_find_median(nums1, nums2),
     }
   }
 }
