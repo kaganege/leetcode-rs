@@ -9,61 +9,12 @@ use super::Solution;
 // @lc code=start
 #[allow(unused)]
 impl Solution {
-  fn median(nums: Vec<i32>) -> f64 {
-    let len = nums.len();
-    let center = len / 2;
-
-    if len % 2 == 0 {
-      (nums[center - 1] + nums[center]) as f64 / 2.0
-    } else {
-      nums[center] as _
-    }
-  }
-
-  fn merge_sort<T>(l1: Vec<T>, l2: Vec<T>) -> Vec<T>
-  where
-    T: Ord + Copy,
-  {
-    let mut merge = Vec::new();
-
+  // O(m + n)
+  fn two_pointer(nums1: Vec<i32>, nums2: Vec<i32>) -> f64 {
     let mut p1 = 0;
     let mut p2 = 0;
 
-    loop {
-      let val = match (l1.get(p1), l2.get(p2)) {
-        (Some(&val1), Some(&val2)) => {
-          if val1 < val2 {
-            p1 += 1;
-            val1
-          } else {
-            p2 += 1;
-            val2
-          }
-        }
-
-        (Some(&num1), None) => {
-          p1 += 1;
-          num1
-        }
-
-        (None, Some(&num2)) => {
-          p2 += 1;
-          num2
-        }
-
-        // We reached end of the numbers
-        (None, None) => break merge,
-      };
-
-      merge.push(val);
-    }
-  }
-
-  fn merge_sort_and_find_median(l1: Vec<i32>, l2: Vec<i32>) -> f64 {
-    let mut p1 = 0;
-    let mut p2 = 0;
-
-    let total = l1.len() + l2.len();
+    let total = nums1.len() + nums2.len();
     let is_even = total % 2 == 0;
     let center = total / 2;
 
@@ -84,7 +35,7 @@ impl Solution {
     }
 
     loop {
-      match (l1.get(p1), l2.get(p2)) {
+      match (nums1.get(p1), nums2.get(p2)) {
         (Some(&val1), Some(&val2)) => {
           if val1 < val2 {
             p1 += 1;
@@ -110,15 +61,95 @@ impl Solution {
     }
   }
 
-  fn binary_search() {
-    todo!();
+  // O(log(m + n))
+  fn binary_search(
+    a: Vec<i32>,
+    b: Vec<i32>,
+    k: usize,
+    a_start: usize,
+    a_end: Option<usize>,
+    b_start: usize,
+    b_end: Option<usize>,
+  ) -> f64 {
+    todo!("Fix stack overflow");
+
+    let Some(a_end) = a_end else {
+      return b[k - a_start] as f64;
+    };
+    let Some(b_end) = b_end else {
+      return a[k - b_start] as f64;
+    };
+
+    let a_index = (a_start + a_end) / 2;
+    let b_index = (b_start + b_end) / 2;
+
+    let a_value = a[a_index];
+    let b_value = b[b_index];
+
+    if a_index + b_index < k {
+      if a_value < b_value {
+        Self::binary_search(a, b, k, a_index + 1, Some(a_end), b_start, Some(b_end))
+      } else {
+        Self::binary_search(a, b, k, a_start, Some(a_end), b_index + 1, Some(b_end))
+      }
+    } else {
+      if a_value > b_value {
+        Self::binary_search(
+          a,
+          b,
+          k,
+          a_start,
+          a_index.checked_sub(1),
+          b_start,
+          Some(b_end),
+        )
+      } else {
+        Self::binary_search(
+          a,
+          b,
+          k,
+          a_start,
+          Some(a_end),
+          b_start,
+          b_index.checked_sub(1),
+        )
+      }
+    }
   }
 
   pub fn find_median_sorted_arrays(nums1: Vec<i32>, nums2: Vec<i32>) -> f64 {
-    match nums1.len() + nums2.len() {
-      1 => *nums1.first().unwrap_or_else(|| &nums2[0]) as _,
-      2 => Self::median([nums1, nums2].concat()),
-      _ => Self::merge_sort_and_find_median(nums1, nums2),
+    let n1 = nums1.len();
+    let n2 = nums2.len();
+    let total = n1 + n2;
+
+    if total % 2 == 1 {
+      Self::binary_search(
+        nums1,
+        nums2,
+        total / 2,
+        0,
+        n1.checked_sub(1),
+        0,
+        n2.checked_sub(1),
+      )
+    } else {
+      (Self::binary_search(
+        nums1.clone(),
+        nums2.clone(),
+        total / 2 - 1,
+        0,
+        n1.checked_sub(1),
+        0,
+        n2.checked_sub(1),
+      ) + Self::binary_search(
+        nums1,
+        nums2,
+        total / 2,
+        0,
+        n1.checked_sub(1),
+        0,
+        n2.checked_sub(1),
+      )) / 2.0
     }
   }
 }
