@@ -9,7 +9,6 @@ use super::Solution;
 // @lc code=start
 #[allow(unused)]
 impl Solution {
-  // O(m + n)
   fn two_pointer(nums1: Vec<i32>, nums2: Vec<i32>) -> f64 {
     let mut p1 = 0;
     let mut p2 = 0;
@@ -61,96 +60,8 @@ impl Solution {
     }
   }
 
-  // O(log(m + n))
-  fn binary_search(
-    a: Vec<i32>,
-    b: Vec<i32>,
-    k: usize,
-    a_start: usize,
-    a_end: Option<usize>,
-    b_start: usize,
-    b_end: Option<usize>,
-  ) -> f64 {
-    todo!("Fix stack overflow");
-
-    let Some(a_end) = a_end else {
-      return b[k - a_start] as f64;
-    };
-    let Some(b_end) = b_end else {
-      return a[k - b_start] as f64;
-    };
-
-    let a_index = (a_start + a_end) / 2;
-    let b_index = (b_start + b_end) / 2;
-
-    let a_value = a[a_index];
-    let b_value = b[b_index];
-
-    if a_index + b_index < k {
-      if a_value < b_value {
-        Self::binary_search(a, b, k, a_index + 1, Some(a_end), b_start, Some(b_end))
-      } else {
-        Self::binary_search(a, b, k, a_start, Some(a_end), b_index + 1, Some(b_end))
-      }
-    } else {
-      if a_value > b_value {
-        Self::binary_search(
-          a,
-          b,
-          k,
-          a_start,
-          a_index.checked_sub(1),
-          b_start,
-          Some(b_end),
-        )
-      } else {
-        Self::binary_search(
-          a,
-          b,
-          k,
-          a_start,
-          Some(a_end),
-          b_start,
-          b_index.checked_sub(1),
-        )
-      }
-    }
-  }
-
   pub fn find_median_sorted_arrays(nums1: Vec<i32>, nums2: Vec<i32>) -> f64 {
-    let n1 = nums1.len();
-    let n2 = nums2.len();
-    let total = n1 + n2;
-
-    if total % 2 == 1 {
-      Self::binary_search(
-        nums1,
-        nums2,
-        total / 2,
-        0,
-        n1.checked_sub(1),
-        0,
-        n2.checked_sub(1),
-      )
-    } else {
-      (Self::binary_search(
-        nums1.clone(),
-        nums2.clone(),
-        total / 2 - 1,
-        0,
-        n1.checked_sub(1),
-        0,
-        n2.checked_sub(1),
-      ) + Self::binary_search(
-        nums1,
-        nums2,
-        total / 2,
-        0,
-        n1.checked_sub(1),
-        0,
-        n2.checked_sub(1),
-      )) / 2.0
-    }
+    Self::two_pointer(nums1, nums2)
   }
 }
 // @lc code=end
