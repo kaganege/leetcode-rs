@@ -15,3 +15,6 @@ mod median_of_two_sorted_arrays;
 
 #[path = "9.palindrome-number.rs"]
 mod palindrome_number;
+
+#[path = "13.roman-to-integer.rs"]
+mod roman_to_integer;
