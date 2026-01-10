@@ -6,18 +6,29 @@
 
 pub struct Solution;
 
+impl Solution {
+    pub fn roman_to_int2(s: &str) -> i32 {
+        let bytes = s.as_bytes();
+        let mut sum = 0;
+
+        for i in 0..bytes.len() - 1 {
+            let curr = Self::roman_char_to_int(bytes[i] as char);
+            let next = Self::roman_char_to_int(bytes[i + 1] as char);
+
+            sum += if curr < next { -curr } else { curr };
+        }
+
+        // SAFETY: The length is 1 and the last character is ASCII
+        sum + Self::roman_char_to_int(unsafe { *bytes.last().unwrap_unchecked() } as char)
+    }
+}
+
 // @lc code=start
 impl Solution {
     fn str_windows2(s: &str) -> impl ExactSizeIterator<Item = [char; 2]> {
-        s.as_bytes().windows(2).map(|b| {
-            // SAFETY: The bytes are ASCII characters
-            unsafe {
-                [
-                    char::from_u32_unchecked(b[0] as u32),
-                    char::from_u32_unchecked(b[1] as u32),
-                ]
-            }
-        })
+        s.as_bytes()
+            .windows(2)
+            .map(|b| [b[0] as char, b[1] as char])
     }
 
     fn roman_char_to_int(c: char) -> i32 {
@@ -29,6 +40,7 @@ impl Solution {
             'C' => 100,
             'D' => 500,
             'M' => 1000,
+            // SAFETY: The byte is can't be unknown character
             _ => unsafe { std::hint::unreachable_unchecked() },
         }
     }
@@ -45,12 +57,9 @@ impl Solution {
         }
     }
 
-    pub fn roman_to_int(s: String) -> i32 {
+    pub fn roman_to_int1(s: &str) -> i32 {
         if s.len() == 1 {
-            return Self::roman_char_to_int(
-                // SAFETY: The length is 1 and the first character is ASCII
-                unsafe { s.chars().next().unwrap_unchecked() },
-            );
+            return Self::roman_char_to_int(s.as_bytes()[0] as char);
         }
 
         let mut n = 0;
@@ -73,6 +82,10 @@ impl Solution {
 
         n
     }
+
+    pub fn roman_to_int(s: String) -> i32 {
+        Self::roman_to_int1(&s)
+    }
 }
 // @lc code=end
 
@@ -85,85 +98,169 @@ mod tests {
 
     #[test]
     fn example1() {
-        assert_eq!(Solution::roman_to_int("III".to_string()), 3);
+        assert_eq!(Solution::roman_to_int1("III"), 3);
     }
 
     #[bench]
     fn bench_example1(b: &mut Bencher) {
         b.iter(|| {
-            Solution::roman_to_int("III".to_string());
+            Solution::roman_to_int1("III");
         })
     }
 
     #[test]
     fn example2() {
-        assert_eq!(Solution::roman_to_int("LVIII".to_string()), 58);
+        assert_eq!(Solution::roman_to_int1("LVIII"), 58);
     }
 
     #[bench]
     fn bench_example2(b: &mut Bencher) {
         b.iter(|| {
-            Solution::roman_to_int("LVIII".to_string());
+            Solution::roman_to_int1("LVIII");
         })
     }
 
     #[test]
     fn example3() {
-        assert_eq!(Solution::roman_to_int("MCMXCIV".to_string()), 1994);
+        assert_eq!(Solution::roman_to_int1("MCMXCIV"), 1994);
     }
 
     #[bench]
     fn bench_example3(b: &mut Bencher) {
         b.iter(|| {
-            Solution::roman_to_int("MCMXCIV".to_string());
+            Solution::roman_to_int1("MCMXCIV");
         })
     }
 
     #[test]
     fn case1497() {
-        assert_eq!(Solution::roman_to_int("DCXXI".to_string()), 621);
+        assert_eq!(Solution::roman_to_int1("DCXXI"), 621);
     }
 
     #[bench]
     fn bench_case1497(b: &mut Bencher) {
         b.iter(|| {
-            Solution::roman_to_int("DCXXI".to_string());
+            Solution::roman_to_int1("DCXXI");
         })
     }
 
     #[test]
     fn case3800() {
-        assert_eq!(Solution::roman_to_int("MDCXCV".to_string()), 1695);
+        assert_eq!(Solution::roman_to_int1("MDCXCV"), 1695);
     }
 
     #[bench]
     fn bench_case3800(b: &mut Bencher) {
         b.iter(|| {
-            Solution::roman_to_int("MDCXCV".to_string());
+            Solution::roman_to_int1("MDCXCV");
         })
     }
 
     #[test]
     fn case3992() {
-        assert_eq!(Solution::roman_to_int("D".to_string()), 500);
+        assert_eq!(Solution::roman_to_int1("D"), 500);
     }
 
     #[bench]
     fn bench_case3992(b: &mut Bencher) {
         b.iter(|| {
-            Solution::roman_to_int("D".to_string());
+            Solution::roman_to_int1("D");
         })
     }
 
     #[test]
     fn number_4() {
-        assert_eq!(Solution::roman_to_int("IV".to_string()), 4);
+        assert_eq!(Solution::roman_to_int1("IV"), 4);
     }
 
     #[bench]
     fn bench_number_4(b: &mut Bencher) {
         b.iter(|| {
-            Solution::roman_to_int("IV".to_string());
+            Solution::roman_to_int1("IV");
+        })
+    }
+
+    #[test]
+    fn example1_alternative() {
+        assert_eq!(Solution::roman_to_int2("III"), 3);
+    }
+
+    #[bench]
+    fn bench_example1_alternative(b: &mut Bencher) {
+        b.iter(|| {
+            Solution::roman_to_int2("III");
+        })
+    }
+
+    #[test]
+    fn example2_alternative() {
+        assert_eq!(Solution::roman_to_int2("LVIII"), 58);
+    }
+
+    #[bench]
+    fn bench_example2_alternative(b: &mut Bencher) {
+        b.iter(|| {
+            Solution::roman_to_int2("LVIII");
+        })
+    }
+
+    #[test]
+    fn example3_alternative() {
+        assert_eq!(Solution::roman_to_int2("MCMXCIV"), 1994);
+    }
+
+    #[bench]
+    fn bench_example3_alternative(b: &mut Bencher) {
+        b.iter(|| {
+            Solution::roman_to_int2("MCMXCIV");
+        })
+    }
+
+    #[test]
+    fn case1497_alternative() {
+        assert_eq!(Solution::roman_to_int2("DCXXI"), 621);
+    }
+
+    #[bench]
+    fn bench_case1497_alternative(b: &mut Bencher) {
+        b.iter(|| {
+            Solution::roman_to_int2("DCXXI");
+        })
+    }
+
+    #[test]
+    fn case3800_alternative() {
+        assert_eq!(Solution::roman_to_int2("MDCXCV"), 1695);
+    }
+
+    #[bench]
+    fn bench_case3800_alternative(b: &mut Bencher) {
+        b.iter(|| {
+            Solution::roman_to_int2("MDCXCV");
+        })
+    }
+
+    #[test]
+    fn case3992_alternative() {
+        assert_eq!(Solution::roman_to_int2("D"), 500);
+    }
+
+    #[bench]
+    fn bench_case3992_alternative(b: &mut Bencher) {
+        b.iter(|| {
+            Solution::roman_to_int2("D");
+        })
+    }
+
+    #[test]
+    fn number_4_alternative() {
+        assert_eq!(Solution::roman_to_int2("IV"), 4);
+    }
+
+    #[bench]
+    fn bench_number_4_alternative(b: &mut Bencher) {
+        b.iter(|| {
+            Solution::roman_to_int2("IV");
         })
     }
 }
