@@ -4,66 +4,68 @@
  * [1] Two Sum
  */
 
-use super::Solution;
+pub struct Solution;
 
 // @lc code=start
 impl Solution {
-  pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
-    for (i, a) in nums.iter().enumerate() {
-      for (j, b) in nums.iter().enumerate() {
-        if i == j {
-          continue;
+    pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
+        for (i, a) in nums.iter().enumerate() {
+            for (j, b) in nums.iter().enumerate() {
+                if i == j {
+                    continue;
+                }
+
+                if a + b == target {
+                    return vec![i as i32, j as i32];
+                }
+            }
         }
 
-        if a + b == target {
-          return vec![i as i32, j as i32];
-        }
-      }
+        unreachable!()
     }
-
-    unreachable!()
-  }
 }
 // @lc code=end
 
 #[cfg(test)]
 mod tests {
-  use super::*;
-  use test::Bencher;
+    extern crate test;
 
-  #[test]
-  fn example1() {
-    assert_eq!(Solution::two_sum(vec![2, 7, 11, 15], 9), vec![0, 1]);
-  }
+    use super::*;
+    use test::Bencher;
 
-  #[bench]
-  fn bench_example1(b: &mut Bencher) {
-    b.iter(|| {
-      Solution::two_sum(vec![2, 7, 11, 15], 9);
-    });
-  }
+    #[test]
+    fn example1() {
+        assert_eq!(Solution::two_sum(vec![2, 7, 11, 15], 9), vec![0, 1]);
+    }
 
-  #[test]
-  fn example2() {
-    assert_eq!(Solution::two_sum(vec![3, 2, 4], 6), vec![1, 2]);
-  }
+    #[bench]
+    fn bench_example1(b: &mut Bencher) {
+        b.iter(|| {
+            Solution::two_sum(vec![2, 7, 11, 15], 9);
+        });
+    }
 
-  #[bench]
-  fn bench_example2(b: &mut Bencher) {
-    b.iter(|| {
-      Solution::two_sum(vec![3, 2, 4], 6);
-    });
-  }
+    #[test]
+    fn example2() {
+        assert_eq!(Solution::two_sum(vec![3, 2, 4], 6), vec![1, 2]);
+    }
 
-  #[test]
-  fn example3() {
-    assert_eq!(Solution::two_sum(vec![3, 3], 6), vec![0, 1]);
-  }
+    #[bench]
+    fn bench_example2(b: &mut Bencher) {
+        b.iter(|| {
+            Solution::two_sum(vec![3, 2, 4], 6);
+        });
+    }
 
-  #[bench]
-  fn bench_example3(b: &mut Bencher) {
-    b.iter(|| {
-      Solution::two_sum(vec![3, 3], 6);
-    });
-  }
+    #[test]
+    fn example3() {
+        assert_eq!(Solution::two_sum(vec![3, 3], 6), vec![0, 1]);
+    }
+
+    #[bench]
+    fn bench_example3(b: &mut Bencher) {
+        b.iter(|| {
+            Solution::two_sum(vec![3, 3], 6);
+        });
+    }
 }
