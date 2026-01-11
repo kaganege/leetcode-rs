@@ -21,3 +21,6 @@ mod roman_to_integer;
 
 #[path = "14.longest-common-prefix.rs"]
 mod longest_common_prefix;
+
+#[path = "20.valid-parentheses.rs"]
+mod valid_parentheses;
