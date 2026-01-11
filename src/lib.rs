@@ -24,3 +24,6 @@ mod longest_common_prefix;
 
 #[path = "20.valid-parentheses.rs"]
 mod valid_parentheses;
+
+#[path = "21.merge-two-sorted-lists.rs"]
+mod merge_two_sorted_lists;
