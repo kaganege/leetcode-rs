@@ -104,7 +104,7 @@ mod tests {
     #[bench]
     fn bench_example1(b: &mut Bencher) {
         b.iter(|| {
-            Solution::roman_to_int1("III");
+            test::black_box(Solution::roman_to_int1(test::black_box("III")));
         })
     }
 
@@ -116,7 +116,7 @@ mod tests {
     #[bench]
     fn bench_example2(b: &mut Bencher) {
         b.iter(|| {
-            Solution::roman_to_int1("LVIII");
+            test::black_box(Solution::roman_to_int1(test::black_box("LVIII")));
         })
     }
 
@@ -128,7 +128,7 @@ mod tests {
     #[bench]
     fn bench_example3(b: &mut Bencher) {
         b.iter(|| {
-            Solution::roman_to_int1("MCMXCIV");
+            test::black_box(Solution::roman_to_int1(test::black_box("MCMXCIV")));
         })
     }
 
@@ -140,7 +140,7 @@ mod tests {
     #[bench]
     fn bench_case1497(b: &mut Bencher) {
         b.iter(|| {
-            Solution::roman_to_int1("DCXXI");
+            test::black_box(Solution::roman_to_int1(test::black_box("DCXXI")));
         })
     }
 
@@ -152,7 +152,7 @@ mod tests {
     #[bench]
     fn bench_case3800(b: &mut Bencher) {
         b.iter(|| {
-            Solution::roman_to_int1("MDCXCV");
+            test::black_box(Solution::roman_to_int1(test::black_box("MDCXCV")));
         })
     }
 
@@ -164,7 +164,7 @@ mod tests {
     #[bench]
     fn bench_case3992(b: &mut Bencher) {
         b.iter(|| {
-            Solution::roman_to_int1("D");
+            test::black_box(Solution::roman_to_int1(test::black_box("D")));
         })
     }
 
@@ -176,7 +176,7 @@ mod tests {
     #[bench]
     fn bench_number_4(b: &mut Bencher) {
         b.iter(|| {
-            Solution::roman_to_int1("IV");
+            test::black_box(Solution::roman_to_int1(test::black_box("IV")));
         })
     }
 
@@ -188,7 +188,7 @@ mod tests {
     #[bench]
     fn bench_example1_alternative(b: &mut Bencher) {
         b.iter(|| {
-            Solution::roman_to_int2("III");
+            test::black_box(Solution::roman_to_int2(test::black_box("III")));
         })
     }
 
@@ -200,7 +200,7 @@ mod tests {
     #[bench]
     fn bench_example2_alternative(b: &mut Bencher) {
         b.iter(|| {
-            Solution::roman_to_int2("LVIII");
+            test::black_box(Solution::roman_to_int2(test::black_box("LVIII")));
         })
     }
 
@@ -212,7 +212,7 @@ mod tests {
     #[bench]
     fn bench_example3_alternative(b: &mut Bencher) {
         b.iter(|| {
-            Solution::roman_to_int2("MCMXCIV");
+            test::black_box(Solution::roman_to_int2(test::black_box("MCMXCIV")));
         })
     }
 
@@ -224,7 +224,7 @@ mod tests {
     #[bench]
     fn bench_case1497_alternative(b: &mut Bencher) {
         b.iter(|| {
-            Solution::roman_to_int2("DCXXI");
+            test::black_box(Solution::roman_to_int2(test::black_box("DCXXI")));
         })
     }
 
@@ -236,7 +236,7 @@ mod tests {
     #[bench]
     fn bench_case3800_alternative(b: &mut Bencher) {
         b.iter(|| {
-            Solution::roman_to_int2("MDCXCV");
+            test::black_box(Solution::roman_to_int2(test::black_box("MDCXCV")));
         })
     }
 
@@ -248,7 +248,7 @@ mod tests {
     #[bench]
     fn bench_case3992_alternative(b: &mut Bencher) {
         b.iter(|| {
-            Solution::roman_to_int2("D");
+            test::black_box(Solution::roman_to_int2(test::black_box("D")));
         })
     }
 
@@ -260,7 +260,7 @@ mod tests {
     #[bench]
     fn bench_number_4_alternative(b: &mut Bencher) {
         b.iter(|| {
-            Solution::roman_to_int2("IV");
+            test::black_box(Solution::roman_to_int2(test::black_box("IV")));
         })
     }
 }

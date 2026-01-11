@@ -8,12 +8,12 @@ pub struct Solution;
 
 // @lc code=start
 impl Solution {
-    pub fn length_of_longest_substring(s: String) -> i32 {
+    pub fn length_of_longest_substring(s: impl AsRef<str>) -> i32 {
         let mut max_len = 0;
         let mut char_map: [usize; 128] = [0; 128];
         let mut start = 0;
 
-        for (i, ch) in s.char_indices() {
+        for (i, ch) in s.as_ref().char_indices() {
             let ch = ch as usize;
             start = start.max(char_map[ch]);
             char_map[ch] = i + 1;
@@ -37,7 +37,7 @@ mod tests {
             Input: s = $l1:expr;
             Output: $o:expr $(;)?
         ) => {
-            assert_eq!(Solution::length_of_longest_substring(String::from($l1)), $o)
+            assert_eq!(Solution::length_of_longest_substring($l1), $o)
         };
     }
 
@@ -52,7 +52,9 @@ mod tests {
     #[bench]
     fn bench_example1(b: &mut Bencher) {
         b.iter(|| {
-            Solution::length_of_longest_substring("abcabcbb".to_string());
+            test::black_box(Solution::length_of_longest_substring(test::black_box(
+                "abcabcbb",
+            )));
         })
     }
 
@@ -67,7 +69,9 @@ mod tests {
     #[bench]
     fn bench_example2(b: &mut Bencher) {
         b.iter(|| {
-            Solution::length_of_longest_substring("bbbbb".to_string());
+            test::black_box(Solution::length_of_longest_substring(test::black_box(
+                "bbbbb",
+            )));
         })
     }
 
@@ -82,7 +86,9 @@ mod tests {
     #[bench]
     fn bench_example3(b: &mut Bencher) {
         b.iter(|| {
-            Solution::length_of_longest_substring("pwwkew".to_string());
+            test::black_box(Solution::length_of_longest_substring(test::black_box(
+                "pwwkew",
+            )));
         })
     }
 }

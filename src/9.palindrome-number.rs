@@ -91,7 +91,7 @@ mod tests {
     #[bench]
     fn bench_example1(b: &mut Bencher) {
         b.iter(|| {
-            Solution::is_palindrome(121);
+            test::black_box(Solution::is_palindrome(test::black_box(121)));
         })
     }
 
@@ -103,7 +103,7 @@ mod tests {
     #[bench]
     fn bench_example2(b: &mut Bencher) {
         b.iter(|| {
-            Solution::is_palindrome(-121);
+            test::black_box(Solution::is_palindrome(test::black_box(-121)));
         })
     }
 
@@ -115,7 +115,7 @@ mod tests {
     #[bench]
     fn bench_example3(b: &mut Bencher) {
         b.iter(|| {
-            Solution::is_palindrome(10);
+            test::black_box(Solution::is_palindrome(test::black_box(10)));
         })
     }
 
@@ -127,7 +127,7 @@ mod tests {
     #[bench]
     fn bench_case11(b: &mut Bencher) {
         b.iter(|| {
-            Solution::is_palindrome(11);
+            test::black_box(Solution::is_palindrome(test::black_box(11)));
         })
     }
 
@@ -139,7 +139,7 @@ mod tests {
     #[bench]
     fn bench_case34(b: &mut Bencher) {
         b.iter(|| {
-            Solution::is_palindrome(88888);
+            test::black_box(Solution::is_palindrome(test::black_box(88888)));
         })
     }
 
@@ -151,7 +151,7 @@ mod tests {
     #[bench]
     fn bench_example1_rev(b: &mut Bencher) {
         b.iter(|| {
-            Solution::is_palindrome_rev(121);
+            test::black_box(Solution::is_palindrome_rev(test::black_box(121)));
         })
     }
 
@@ -163,7 +163,7 @@ mod tests {
     #[bench]
     fn bench_example2_rev(b: &mut Bencher) {
         b.iter(|| {
-            Solution::is_palindrome_rev(-121);
+            test::black_box(Solution::is_palindrome_rev(test::black_box(-121)));
         })
     }
 
@@ -175,7 +175,7 @@ mod tests {
     #[bench]
     fn bench_example3_rev(b: &mut Bencher) {
         b.iter(|| {
-            Solution::is_palindrome_rev(10);
+            test::black_box(Solution::is_palindrome_rev(test::black_box(10)));
         })
     }
 
@@ -187,7 +187,7 @@ mod tests {
     #[bench]
     fn bench_case11_rev(b: &mut Bencher) {
         b.iter(|| {
-            Solution::is_palindrome_rev(11);
+            test::black_box(Solution::is_palindrome_rev(test::black_box(11)));
         })
     }
 
@@ -199,7 +199,7 @@ mod tests {
     #[bench]
     fn bench_case34_rev(b: &mut Bencher) {
         b.iter(|| {
-            Solution::is_palindrome_rev(88888);
+            test::black_box(Solution::is_palindrome_rev(test::black_box(88888)));
         })
     }
 }

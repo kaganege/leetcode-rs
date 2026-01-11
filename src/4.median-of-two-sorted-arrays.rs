@@ -7,7 +7,6 @@
 pub struct Solution;
 
 // @lc code=start
-#[allow(unused)]
 impl Solution {
     fn two_pointer(nums1: Vec<i32>, nums2: Vec<i32>) -> f64 {
         let mut p1 = 0;
@@ -97,6 +96,15 @@ mod tests {
         };
     }
 
+    macro_rules! bench_example {
+        (
+            nums1 = [$($l1:expr),*];
+            nums2 = [$($l2:expr),*]$(;)?
+        ) => {
+            test::black_box(Solution::find_median_sorted_arrays(test::black_box(vec![$($l1),*]), test::black_box(vec![$($l2),*])))
+        };
+    }
+
     #[test]
     fn example1() {
         assert_example! {
@@ -108,7 +116,7 @@ mod tests {
     #[bench]
     fn bench_example1(b: &mut Bencher) {
         b.iter(|| {
-            example! {
+            bench_example! {
                 nums1 = [1,3];
                 nums2 = [2];
             }
@@ -126,7 +134,7 @@ mod tests {
     #[bench]
     fn bench_example2(b: &mut Bencher) {
         b.iter(|| {
-            example! {
+            bench_example! {
                 nums1 = [1,2];
                 nums2 = [3,4];
             }

@@ -41,7 +41,10 @@ mod tests {
     #[bench]
     fn bench_example1(b: &mut Bencher) {
         b.iter(|| {
-            Solution::two_sum(vec![2, 7, 11, 15], 9);
+            test::black_box(Solution::two_sum(
+                test::black_box(vec![2, 7, 11, 15]),
+                test::black_box(9),
+            ));
         });
     }
 
@@ -53,7 +56,10 @@ mod tests {
     #[bench]
     fn bench_example2(b: &mut Bencher) {
         b.iter(|| {
-            Solution::two_sum(vec![3, 2, 4], 6);
+            test::black_box(Solution::two_sum(
+                test::black_box(vec![3, 2, 4]),
+                test::black_box(6),
+            ));
         });
     }
 
@@ -65,7 +71,10 @@ mod tests {
     #[bench]
     fn bench_example3(b: &mut Bencher) {
         b.iter(|| {
-            Solution::two_sum(vec![3, 3], 6);
+            test::black_box(Solution::two_sum(
+                test::black_box(vec![3, 3]),
+                test::black_box(6),
+            ));
         });
     }
 }

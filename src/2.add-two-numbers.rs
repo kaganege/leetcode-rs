@@ -87,6 +87,15 @@ mod tests {
         };
     }
 
+    macro_rules! bench_example {
+        (
+            l1 = [$($l1:expr),*];
+            l2 = [$($l2:expr),*]$(;)?
+        ) => {
+            test::black_box(Solution::add_two_numbers(test::black_box(Some(list_to_node(vec![$($l1),*]))), test::black_box(Some(list_to_node(vec![$($l2),*])))))
+        };
+    }
+
     fn list_to_node(list: Vec<i32>) -> Box<ListNode> {
         let mut list = list.into_iter();
         let mut head_node = Box::new(ListNode::new(list.next().expect("List should be nonempty")));
@@ -111,7 +120,7 @@ mod tests {
     #[bench]
     fn bench_example1(b: &mut Bencher) {
         b.iter(|| {
-            example! {
+            bench_example! {
                 l1 = [2,4,3];
                 l2 = [5,6,4];
             }
@@ -129,7 +138,7 @@ mod tests {
     #[bench]
     fn bench_example2(b: &mut Bencher) {
         b.iter(|| {
-            example! {
+            bench_example! {
                 l1 = [0];
                 l2 = [0];
             }
@@ -147,7 +156,7 @@ mod tests {
     #[bench]
     fn bench_example3(b: &mut Bencher) {
         b.iter(|| {
-            example! {
+            bench_example! {
                 l1 = [9,9,9,9,9,9,9];
                 l2 = [9,9,9,9];
             }
