@@ -27,3 +27,6 @@ mod valid_parentheses;
 
 #[path = "21.merge-two-sorted-lists.rs"]
 mod merge_two_sorted_lists;
+
+#[path = "2335.minimum-amount-of-time-to-fill-cups.rs"]
+mod minimum_amount_of_time_to_fill_cups;
