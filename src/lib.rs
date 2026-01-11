@@ -18,3 +18,6 @@ mod palindrome_number;
 
 #[path = "13.roman-to-integer.rs"]
 mod roman_to_integer;
+
+#[path = "14.longest-common-prefix.rs"]
+mod longest_common_prefix;
